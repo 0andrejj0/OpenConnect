@@ -27,16 +27,23 @@ def main():
     assert pc_arch in ['x86_64']
 
     configure_command = 'cmake ' + \
-                        '-DCMAKE_INSTALL_PREFIX:PATH=' + f'{dir_path}/install' + \
+                        '-DCMAKE_INSTALL_PREFIX:PATH=' + f'{dir_path}/install ' + \
                         '-S ' + f'{dir_path}/desktop ' + \
                         '-B ' + f'{dir_path}/build ' + \
-                        '-D ABSL_PROPAGATE_CXX_STD=ON'
+                        '-D ABSL_PROPAGATE_CXX_STD=ON ' + \
+                        '-D CMAKE_EXPORT_COMPILE_COMMANDS=ON'
     
     os.system(configure_command)
 
     build_command = 'make -C' + \
-                    f'{dir_path}/build'
+                    f'{dir_path}/build '
+
+    install_command = 'make -C' + \
+                    f'{dir_path}/build ' + \
+                    'install '
 
     os.system(build_command)
+
+    os.system(install_command)
 
 main()

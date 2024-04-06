@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.28)
 
-project (OpenCOnnectServer CXX)
+project (OpenConnectServer CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CMAKE_CXX_STANDARD 23)
@@ -24,7 +24,22 @@ else()
     find_package(gRPC REQUIRED)
 endif()
 
+if (NOT USE_SYSTEM_SPDLOG)
+    message("Use spdlog from github")
+    include(FetchContent)
 
+    FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog
+        GIT_TAG        v1.x
+    )
+    set(FETCHCONTENT_QUIET OFF)
+    FetchContent_MakeAvailable(spdlog)
+else()
+    message("Use local spdlog")
+    find_package(spdlog REQUIRED)
+endif()
 
+add_subdirectory(server)
 
 project (OpenConnect CXX)
