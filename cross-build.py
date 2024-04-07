@@ -16,24 +16,17 @@ def main():
         pass
 
     parser = argparse.ArgumentParser(description='kek')
-    parser.add_argument('--pc_arch', type=str, help='PC arch')
-    parser.add_argument('--pc_os', type=str, help='PC OS')
     args = parser.parse_args()
-
-    pc_os = args.pc_os
-    assert pc_os in ['linux']
-
-    pc_arch = args.pc_arch
-    assert pc_arch in ['x86_64']
 
     configure_command = 'cmake ' + \
                         '-DCMAKE_INSTALL_PREFIX:PATH=' + f'{dir_path}/install ' + \
                         '-S ' + f'{dir_path}/desktop ' + \
                         '-B ' + f'{dir_path}/build ' + \
                         '-D ABSL_PROPAGATE_CXX_STD=ON ' + \
-                        '-D CMAKE_EXPORT_COMPILE_COMMANDS=ON'
+                        '-D CMAKE_EXPORT_COMPILE_COMMANDS=ON ' + \
+                        '-D COMMON_DIR=' + f'{dir_path}/common '
     
-    os.system(configure_command)
+    assert(os.system(configure_command) == 0)
 
     build_command = 'make -C' + \
                     f'{dir_path}/build '
@@ -42,8 +35,8 @@ def main():
                     f'{dir_path}/build ' + \
                     'install '
 
-    os.system(build_command)
+    assert(os.system(build_command) == 0)
 
-    os.system(install_command)
+    assert(os.system(install_command) == 0)
 
 main()

@@ -3,7 +3,10 @@ cmake_minimum_required (VERSION 3.28)
 project (OpenConnectServer CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
-set(CMAKE_CXX_STANDARD 23)
+
+if (NOT COMMON_DIR)
+    message(FATAL_ERROR "You must specify COMMON_DIR var")
+endif()
 
 if (NOT USE_SYSTEM_GRPC)
     message("Use gRPC from github")
@@ -40,6 +43,9 @@ else()
     find_package(spdlog REQUIRED)
 endif()
 
+set(CMAKE_CXX_STANDARD 20)
+
+add_subdirectory(grpc_server)
 add_subdirectory(server)
 
 project (OpenConnect CXX)
