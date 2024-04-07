@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package openconnect;
+
+message Retcode {
+    int32 retcode = 1;
+}
+
+// send notification
+message NotificationEntry {
+    string from = 1;
+    string data = 2;
+}
+
+message NotificationAggregate {
+    repeated NotificationEntry notifications = 1;
+}
+
+// send text
+message KeyboardEntry {
+    int32 key = 1;
+}
+
+message KeyboardAggregate {
+    repeated KeyboardEntry keys = 1;
+}
+
+

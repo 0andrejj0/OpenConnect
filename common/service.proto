@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package openconnect;
+
+import "types.proto";
+
+service Server {
+    rpc PostNotifications (NotificationAggregate) returns (Retcode) {}
+    rpc PostKey           (KeyboardAggregate)     returns (Retcode) {}
+}
