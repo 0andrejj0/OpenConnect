@@ -2,8 +2,15 @@ syntax = "proto3";
 
 package openconnect;
 
+message Void {}
+
 message Retcode {
     int32 retcode = 1;
+}
+
+message File {
+    string type = 1;
+    bytes file = 2;
 }
 
 // send notification
@@ -25,4 +32,14 @@ message KeyboardAggregate {
     repeated KeyboardEntry keys = 1;
 }
 
+// clipboard
+message ClipboardEntry {
+    oneof content {
+        string clipboardText = 1;
+        File file = 2;
+    }
+}
 
+message OptionalClipboardEntry {
+    optional ClipboardEntry clipboardEntry = 1;
+}
