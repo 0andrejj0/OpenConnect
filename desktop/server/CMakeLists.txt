@@ -10,10 +10,12 @@ add_library(${SERVER_LIBRARY_NAME}
 target_include_directories(${SERVER_LIBRARY_NAME}
     PUBLIC
         "include"
+        "${UDP_SERVER_INCLUDE}"
 )
 target_link_libraries(${SERVER_LIBRARY_NAME}
     PRIVATE
         spdlog::spdlog
+        udp_server
 )
 
 # build executable
@@ -30,6 +32,5 @@ target_link_libraries(${PROJECT_NAME}
 
 # install
 
-install(TARGETS ${PROJECT_NAME}
-        DESTINATION "install")
+install(TARGETS ${PROJECT_NAME})
 

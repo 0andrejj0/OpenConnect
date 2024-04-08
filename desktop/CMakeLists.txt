@@ -8,6 +8,8 @@ if (NOT COMMON_DIR)
     message(FATAL_ERROR "You must specify COMMON_DIR var")
 endif()
 
+
+# grpc
 if (NOT USE_SYSTEM_GRPC)
     message("Use gRPC from github")
     include(FetchContent)
@@ -27,6 +29,7 @@ else()
     find_package(gRPC REQUIRED)
 endif()
 
+# spdlog
 if (NOT USE_SYSTEM_SPDLOG)
     message("Use spdlog from github")
     include(FetchContent)
@@ -43,8 +46,22 @@ else()
     find_package(spdlog REQUIRED)
 endif()
 
+if (NOT USE_SYSTEM_MINIMALSOCKET)
+    message("Use minimalsocket github")
+    set(BUILD_MinimalCppSocket_SAMPLES OFF CACHE BOOL "" FORCE) # you don't want the samples in this case
+    FetchContent_Declare(
+        min_sock
+        GIT_REPOSITORY https://github.com/andreacasalino/Minimal-Socket
+        GIT_TAG        master
+    )
+    FetchContent_MakeAvailable(min_sock)
+else()
+    message(FATAL_ERROR "MINIMALSOCKET allowed only from github")
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 
+add_subdirectory(udp_server)
 add_subdirectory(grpc_server)
 add_subdirectory(server)
 
