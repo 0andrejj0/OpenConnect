@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include "udp_server.h"
+#include "fs_processor.h"
 
 #include <atomic>
 #include <filesystem>
