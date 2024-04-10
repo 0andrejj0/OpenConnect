@@ -61,8 +61,10 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 
+add_subdirectory(common)
 add_subdirectory(udp_server)
 add_subdirectory(grpc_server)
+add_subdirectory(processors)
 add_subdirectory(server)
 
 project (OpenConnect CXX)

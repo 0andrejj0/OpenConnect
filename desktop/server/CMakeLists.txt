@@ -7,15 +7,19 @@ add_library(${SERVER_LIBRARY_NAME}
     STATIC
         "src/server.cpp"
 )
+message(WARNING "${FS_PROCESSOR_INCLUDE}")
 target_include_directories(${SERVER_LIBRARY_NAME}
     PUBLIC
+        "${COMMON_INCLUDE_DIR}"
         "include"
         "${UDP_SERVER_INCLUDE}"
+        "${FS_PROCESSOR_INCLUDE}"
 )
 target_link_libraries(${SERVER_LIBRARY_NAME}
     PRIVATE
         spdlog::spdlog
-        udp_server
+        udp_server_lib
+        fs_processor_lib
 )
 
 # build executable
@@ -23,7 +27,10 @@ target_link_libraries(${SERVER_LIBRARY_NAME}
 add_executable(${PROJECT_NAME}
     main.cpp
 )
-
+target_include_directories(${PROJECT_NAME}
+    PRIVATE
+        "${COMMON_INCLUDE_DIR}"
+)
 target_link_libraries(${PROJECT_NAME} 
     PRIVATE 
         spdlog::spdlog
