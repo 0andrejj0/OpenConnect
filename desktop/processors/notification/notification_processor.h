@@ -9,10 +9,10 @@ namespace openconnect {
 
 class NotificationProcessor {
 public:
-    NotificationProcessor() = default;
+    NotificationProcessor();
     
 public:
-    int PushNotification(NotificationAggregate&& notifications) noexcept;
+    int PushNotification(NotificationAggregateCpp&& notifications) noexcept;
     
 private:
     std::any m_impl;

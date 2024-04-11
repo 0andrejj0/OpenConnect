@@ -37,8 +37,12 @@ namespace openconnect {
             FixPath(m_config.imagesSavePath),
             FixPath(m_config.videosSavePath),
             FixPath(m_config.filesSavePath))
+        , m_ClipboardProcessor({})
     {
         SPDLOG_INFO("Server initialization...");
+
+        m_NotificationProcessor.PushNotification({NotificationEntryCpp{.senderName="from mee", .text="MESSSAGE"}});
+        m_ClipboardProcessor.setClipboard({"KEK_CLIPBOARD"});
 
         m_UDPServer.emplace(
             [this](const std::string& s) {
@@ -53,6 +57,16 @@ namespace openconnect {
                 try {
                     m_FSProcessor.PushFile(std::move(entry));
                 } catch (const std::exception& e) {
+                    SPDLOG_ERROR("Failed to save file");
+                    return 1;
+                }
+                return 0;
+            },
+            [this](openconnect::NotificationAggregateCpp&& entry) -> int {
+                try {
+                    m_NotificationProcessor.PushNotification(std::move(entry));
+                } catch (const std::exception& e) {
+                    SPDLOG_ERROR("Failed to display notifications");
                     return 1;
                 }
                 return 0;

@@ -16,3 +16,5 @@ target_link_libraries(${LIBRARY_NAME}
     PRIVATE
         spdlog::spdlog
 )
+
+set(CLIPBOARD_PROCESSOR_INCLUDE "${CMAKE_CURRENT_LIST_DIR}" CACHE INTERNAL "")

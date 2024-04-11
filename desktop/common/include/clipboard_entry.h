@@ -9,8 +9,8 @@
 #include "file_entry.h"
 
 namespace openconnect {
-    struct ClipboardEntry {
+    struct ClipboardEntryCpp {
         std::variant<std::string, FileEntry> content;
     };
-    using OptionalClipboardEntry = std::optional<ClipboardEntry>;
+    using OptionalClipboardEntryCpp = std::optional<ClipboardEntryCpp>;
 }

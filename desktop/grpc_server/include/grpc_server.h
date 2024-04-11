@@ -1,4 +1,6 @@
 #include "file_entry.h"
+#include "clipboard_entry.h"
+#include "notification_entry.h"
 
 #include <functional>
 #include <spdlog/spdlog.h>
@@ -12,7 +14,11 @@ namespace openconnect {
 
 class GRPCServer {
 public:
-    GRPCServer(int port, std::function<int(openconnect::FileEntry&&)>&& pushFileCallback);
+    GRPCServer(
+        int port,
+        std::function<int(openconnect::FileEntry&&)>&& pushFileCallback,
+        std::function<int(openconnect::NotificationAggregateCpp&&)>&& pushNotificationCallback
+    );
     void Run();
     void Stop();
 
@@ -26,13 +32,10 @@ private:
 
     // rpc PostFile          (File)                  returns (Retcode)                {}
 
-    std::atomic<bool> m_stop{false};
-    std::atomic<bool> m_stopped{false};
     int m_port;
 
     std::function<int(openconnect::FileEntry&&)> m_pushFileCallback;
-
-    std::function<void()> StopCallback;
+    std::function<int(openconnect::NotificationAggregateCpp&&)> m_pushNotificationCallback;
 };
 
 } // namespace openconnect

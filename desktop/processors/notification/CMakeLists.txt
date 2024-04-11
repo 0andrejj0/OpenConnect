@@ -53,3 +53,5 @@ target_link_libraries(${LIBRARY_NAME}
         spdlog::spdlog
         "${PLATFORM_LIB}"
 )
+
+set(NOTIFICATION_PROCESSOR_INCLUDE ${CMAKE_CURRENT_LIST_DIR} CACHE INTERNAL "")

@@ -17,11 +17,19 @@ namespace {
 class Service
     : public openconnect::Server::Service {
 public:
-    Service(std::function<int(openconnect::FileEntry&& entry)>&& pushFileCallback)
+    Service(
+            std::function<int(openconnect::FileEntry&& entry)>&& pushFileCallback,
+            std::function<int(openconnect::NotificationAggregateCpp&&)>&& pushNotificationCallback)
         : m_pushFileCallback(pushFileCallback)
+        , m_pushNotificationCallback(pushNotificationCallback)
     {}
 public:
     virtual ::grpc::Status PostNotifications(::grpc::ServerContext* context, const ::openconnect::NotificationAggregate* request, ::openconnect::Retcode* response) {
+        openconnect::NotificationAggregateCpp notifications;
+        for (auto& notification: request->notifications())
+            notifications.push_back({notification.from(), notification.data()});
+        auto rc = m_pushNotificationCallback(std::move(notifications));
+
         return ::grpc::Status::OK;
     }
 
@@ -46,10 +54,10 @@ public:
         try {
             auto rc = m_pushFileCallback(std::move(file));
             if (rc) {
-                SPDLOG_ERROR("Faailed to push file. ErrorCode: {}", rc);
+                SPDLOG_ERROR("Push file callback failed. ErrorCode: {}", rc);
             }
         } catch (const std::exception& e) {
-            SPDLOG_ERROR("Faailed to push file. Error: {}", e.what());
+            SPDLOG_ERROR("Exception from push file callback. Error: {}", e.what());
         }
 
         return ::grpc::Status::OK;
@@ -58,6 +66,7 @@ public:
 private:
 
     std::function<int(openconnect::FileEntry&& entry)> m_pushFileCallback;
+    std::function<int(openconnect::NotificationAggregateCpp&&)> m_pushNotificationCallback;
 };
 
 }
@@ -67,7 +76,8 @@ namespace openconnect {
     
 GRPCServer::GRPCServer(
         int port, 
-        std::function<int(openconnect::FileEntry&&)>&& pushFileCallback)
+        std::function<int(openconnect::FileEntry&&)>&& pushFileCallback,
+        std::function<int(openconnect::NotificationAggregateCpp&&)>&& notificationCallback)
     : m_port(port)
     , m_pushFileCallback(pushFileCallback) {
     SPDLOG_INFO("Grpc server initialization...");
@@ -81,7 +91,10 @@ void GRPCServer::Run() {
     builder.AddListeningPort(std::format("0.0.0.0:{}", m_port), grpc::InsecureServerCredentials());
 
 
-    Service service(std::move(m_pushFileCallback));
+    Service service(
+        std::move(m_pushFileCallback),
+        std::move(m_pushNotificationCallback)
+    );
 
     builder.RegisterService(&service);
 

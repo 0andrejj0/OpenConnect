@@ -6,7 +6,13 @@
 
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    #include "DesktopNotificationManagerCompat.h"
+    #include <NotificationActivationCallback.h>
+    #include <windows.ui.notifications.h>
 
+    using namespace ABI::Windows::Data::Xml::Dom;
+    using namespace ABI::Windows::UI::Notifications;
+    using namespace Microsoft::WRL;
 #elif  defined(__linux)
 
 #include <libnotify/notify.h>
@@ -17,18 +23,19 @@
 
 namespace {
 
-#ifdef defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 
 #elif  __linux
 
 class NotificationProcessorImplLinux {
+public:
     NotificationProcessorImplLinux() {
         auto ok = notify_init("OpenConnect");
         if (!ok)
             throw std::runtime_error("failed to init notifications");
     }
 public:
-    int PushNotification(openconnect::NotificationAggregate&& notifications) override {
+    int PushNotification(openconnect::NotificationAggregateCpp&& notifications) {
         for (auto& notification : notifications) {
             NotifyNotification *notifReq = notify_notification_new(notification.senderName.c_str(), notification.text.c_str(), NULL);
             notify_notification_show(notifReq, NULL);
@@ -42,18 +49,26 @@ public:
 #endif
 }
 
-
-
-
 namespace openconnect {
-    int NotificationProcessor::PushNotification(NotificationAggregate&& notifications) noexcept {
-        #ifdef defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 
-        #elif  __linux
+
+    NotificationProcessor::NotificationProcessor() {
+            #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+            #elif  defined(__linux)
+                m_impl.emplace<NotificationProcessorImplLinux>();
+            #elif defined(__APPLE__)
+            #endif
+    }
+
+
+    int NotificationProcessor::PushNotification(NotificationAggregateCpp&& notifications) noexcept {
+        #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+
+        #elif  defined(__linux)
             auto& impl = std::any_cast<NotificationProcessorImplLinux&>(m_impl);
             return impl.PushNotification(std::move(notifications));
             
-        #elif __APPLE__
+        #elif defined(__APPLE__)
             
         #endif
     }

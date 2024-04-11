@@ -2,7 +2,10 @@
 
 #include "udp_server.h"
 #include "grpc_server.h"
+
 #include "fs_processor.h"
+#include "notification_processor.h"
+#include "clipboard_processor.h"
 
 #include <atomic>
 #include <filesystem>
@@ -31,8 +34,10 @@ private: // grpc server
 private: // config
     const ServerConfig m_config;
 
-private:
-    FSProcessor m_FSProcessor;
+private: // processors
+    FSProcessor           m_FSProcessor;
+    NotificationProcessor m_NotificationProcessor;
+    ClipboardProcessor    m_ClipboardProcessor;
 
 private: // common
     std::atomic_flag m_stop{false};
