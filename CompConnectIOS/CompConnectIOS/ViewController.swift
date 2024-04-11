@@ -4,7 +4,7 @@ import Network
 final class ViewController: UIViewController {
 
 		var connection: NWConnection?
-		var hostUDP: NWEndpoint.Host = "192.168.1.0"
+		var hostUDP: NWEndpoint.Host = "192.168.1.67"
 		var portUDP: NWEndpoint.Port = 8080
 
 		override func viewDidLoad() {

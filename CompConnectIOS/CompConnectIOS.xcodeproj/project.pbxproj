@@ -15,12 +15,12 @@
 		FDED74BA2BC1B18400CFA3AF /* PasteboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74B92BC1B18400CFA3AF /* PasteboardService.swift */; };
 		FDED74BC2BC1C29D00CFA3AF /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74BB2BC1C29D00CFA3AF /* CameraService.swift */; };
 		FDED74BE2BC1C2FA00CFA3AF /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74BD2BC1C2FA00CFA3AF /* NotificationService.swift */; };
-		FDED74C02BC1C36C00CFA3AF /* TrackpadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74BF2BC1C36C00CFA3AF /* TrackpadService.swift */; };
+		FDED74C02BC1C36C00CFA3AF /* ListDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74BF2BC1C36C00CFA3AF /* ListDevices.swift */; };
 		FDED74C22BC1C3D800CFA3AF /* KeyboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74C12BC1C3D800CFA3AF /* KeyboardService.swift */; };
 		FDED75232BC6F2EF00CFA3AF /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED75222BC6F2EF00CFA3AF /* ShareViewController.swift */; };
 		FDED75262BC6F2EF00CFA3AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDED75242BC6F2EF00CFA3AF /* MainInterface.storyboard */; };
 		FDED752A2BC6F2EF00CFA3AF /* ShareToComp.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */; };
+		FDED75312BC895F400CFA3AF /* ListFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED75302BC895F400CFA3AF /* ListFeatures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,13 +58,13 @@
 		FDED74B92BC1B18400CFA3AF /* PasteboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardService.swift; sourceTree = "<group>"; };
 		FDED74BB2BC1C29D00CFA3AF /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		FDED74BD2BC1C2FA00CFA3AF /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		FDED74BF2BC1C36C00CFA3AF /* TrackpadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadService.swift; sourceTree = "<group>"; };
+		FDED74BF2BC1C36C00CFA3AF /* ListDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDevices.swift; sourceTree = "<group>"; };
 		FDED74C12BC1C3D800CFA3AF /* KeyboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardService.swift; sourceTree = "<group>"; };
 		FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareToComp.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDED75222BC6F2EF00CFA3AF /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		FDED75252BC6F2EF00CFA3AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		FDED75272BC6F2EF00CFA3AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFeatures.swift; sourceTree = "<group>"; };
+		FDED75302BC895F400CFA3AF /* ListFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFeatures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +108,12 @@
 			children = (
 				FDED74A52BC1AF6C00CFA3AF /* AppDelegate.swift */,
 				FDED74A72BC1AF6C00CFA3AF /* SceneDelegate.swift */,
-				FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */,
+				FDED75302BC895F400CFA3AF /* ListFeatures.swift */,
 				FDED74A92BC1AF6C00CFA3AF /* ViewController.swift */,
 				FDED74B92BC1B18400CFA3AF /* PasteboardService.swift */,
 				FDED74BB2BC1C29D00CFA3AF /* CameraService.swift */,
 				FDED74BD2BC1C2FA00CFA3AF /* NotificationService.swift */,
-				FDED74BF2BC1C36C00CFA3AF /* TrackpadService.swift */,
+				FDED74BF2BC1C36C00CFA3AF /* ListDevices.swift */,
 				FDED74C12BC1C3D800CFA3AF /* KeyboardService.swift */,
 				FDED74AE2BC1AF7100CFA3AF /* Assets.xcassets */,
 				FDED74B02BC1AF7100CFA3AF /* LaunchScreen.storyboard */,
@@ -234,12 +234,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDED74BC2BC1C29D00CFA3AF /* CameraService.swift in Sources */,
-				FDED74C02BC1C36C00CFA3AF /* TrackpadService.swift in Sources */,
+				FDED74C02BC1C36C00CFA3AF /* ListDevices.swift in Sources */,
 				FDED74C22BC1C3D800CFA3AF /* KeyboardService.swift in Sources */,
-				FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */,
 				FDED74BA2BC1B18400CFA3AF /* PasteboardService.swift in Sources */,
 				FDED74AA2BC1AF6C00CFA3AF /* ViewController.swift in Sources */,
 				FDED74A62BC1AF6C00CFA3AF /* AppDelegate.swift in Sources */,
+				FDED75312BC895F400CFA3AF /* ListFeatures.swift in Sources */,
 				FDED74BE2BC1C2FA00CFA3AF /* NotificationService.swift in Sources */,
 				FDED74A82BC1AF6C00CFA3AF /* SceneDelegate.swift in Sources */,
 			);
