@@ -20,7 +20,7 @@
 		FDED75232BC6F2EF00CFA3AF /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED75222BC6F2EF00CFA3AF /* ShareViewController.swift */; };
 		FDED75262BC6F2EF00CFA3AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDED75242BC6F2EF00CFA3AF /* MainInterface.storyboard */; };
 		FDED752A2BC6F2EF00CFA3AF /* ShareToComp.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FDED75312BC895F400CFA3AF /* ListFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED75302BC895F400CFA3AF /* ListFeatures.swift */; };
+		FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,6 +236,7 @@
 				FDED74BC2BC1C29D00CFA3AF /* CameraService.swift in Sources */,
 				FDED74C02BC1C36C00CFA3AF /* ListDevices.swift in Sources */,
 				FDED74C22BC1C3D800CFA3AF /* KeyboardService.swift in Sources */,
+				FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */,
 				FDED74BA2BC1B18400CFA3AF /* PasteboardService.swift in Sources */,
 				FDED74AA2BC1AF6C00CFA3AF /* ViewController.swift in Sources */,
 				FDED74A62BC1AF6C00CFA3AF /* AppDelegate.swift in Sources */,

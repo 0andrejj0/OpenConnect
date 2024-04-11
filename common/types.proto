@@ -9,11 +9,14 @@ message Retcode {
 }
 
 message File {
-    string type = 1;
-    bytes file = 2;
+    oneof nameOrExt {
+        string name = 1;
+        string extension = 2;
+    };
+    bytes file = 3;
 }
 
-// send notification
+// notification
 message NotificationEntry {
     string from = 1;
     string data = 2;
@@ -23,13 +26,23 @@ message NotificationAggregate {
     repeated NotificationEntry notifications = 1;
 }
 
-// send text
+// keyboard
 message KeyboardEntry {
     int32 key = 1;
 }
 
 message KeyboardAggregate {
-    repeated KeyboardEntry keys = 1;
+    repeated KeyboardEntry events = 1;
+}
+
+// touchpad
+message TouchpadEventEntry {
+    int64 nsec = 1;
+    // TODO
+}
+
+message TouchpadAggregate {
+    repeated TouchpadEventEntry events = 1;
 }
 
 // clipboard

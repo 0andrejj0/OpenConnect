@@ -5,12 +5,14 @@ package openconnect;
 import "types.proto";
 
 service Server {
-    rpc PostNotifications (NotificationAggregate) returns (Retcode)        {}
+    rpc PostNotifications (NotificationAggregate) returns (Retcode)                {}
     // TODO ReadNotifications
 
-    rpc PostKey           (KeyboardAggregate)     returns (Retcode)        {}
+    rpc PostKey           (KeyboardAggregate)     returns (Retcode)                {}
     // TODO PostTouchpad
 
-    rpc PostClipboard     (ClipboardEntry)        returns (Retcode)        {}
-    rpc ReadClipboard     (Void)                  returns (ClipboardEntry) {}
+    rpc PostClipboard     (ClipboardEntry)        returns (Retcode)                {}
+    rpc ReadClipboard     (Void)                  returns (OptionalClipboardEntry) {}
+
+    rpc PostFile          (File)                  returns (Retcode)                {}
 }
