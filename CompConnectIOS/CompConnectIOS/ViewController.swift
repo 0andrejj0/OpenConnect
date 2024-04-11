@@ -17,7 +17,7 @@ final class ViewController: UIViewController {
 				}
 				
 				view.backgroundColor = .red
-				connectToUDP(hostUDP, portUDP)
+				//connectToUDP(hostUDP, portUDP)
 		}
 
 		func connectToUDP(_ hostUDP: NWEndpoint.Host, _ portUDP: NWEndpoint.Port) {
