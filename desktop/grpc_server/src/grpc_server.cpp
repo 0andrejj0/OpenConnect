@@ -1,14 +1,17 @@
 #include "grpc_server.h"
 
+#include "clipboard_entry.h"
 #include "file_entry.h"
 #include "service.pb.h"
 #include "service.grpc.pb.h"
 
+#include <exception>
 #include <format>
 #include <functional>
 #include <grpcpp/support/status.h>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
+#include <variant>
 
 #include "types.pb.h"
 
@@ -19,9 +22,11 @@ class Service
 public:
     Service(
             std::function<int(openconnect::FileEntry&& entry)>&& pushFileCallback,
-            std::function<int(openconnect::NotificationAggregateCpp&&)>&& pushNotificationCallback)
+            std::function<int(openconnect::NotificationAggregateCpp&&)>&& pushNotificationCallback,
+            std::function<openconnect::OptionalClipboardEntryCpp()>&& readNotificationsFunc)
         : m_pushFileCallback(pushFileCallback)
         , m_pushNotificationCallback(pushNotificationCallback)
+        , m_readNotificationsFunc(readNotificationsFunc)
     {}
 public:
     virtual ::grpc::Status PostNotifications(::grpc::ServerContext* context, const ::openconnect::NotificationAggregate* request, ::openconnect::Retcode* response) {
@@ -42,6 +47,20 @@ public:
     }
 
     virtual ::grpc::Status ReadClipboard(::grpc::ServerContext* context, const ::openconnect::Void* request, ::openconnect::OptionalClipboardEntry* response) {
+        try {
+            auto res = m_readNotificationsFunc();
+            if (res.has_value()) {
+                ::openconnect::ClipboardEntry value;
+                if (std::holds_alternative<std::string>(res->content)) {
+                    value.set_clipboardtext(std::get<std::string>(res->content));
+                } else {
+                    SPDLOG_ERROR("currently can't reach this code");
+                }
+                response->set_allocated_clipboardentry(&value);
+            }
+        } catch(const std::exception& e) {
+            SPDLOG_ERROR("Failed to read clipboard: {}", e.what());
+        }
         return ::grpc::Status::OK;
     }
 
@@ -65,6 +84,8 @@ public:
 
 private:
 
+    std::function<openconnect::OptionalClipboardEntryCpp()> m_readNotificationsFunc;
+
     std::function<int(openconnect::FileEntry&& entry)> m_pushFileCallback;
     std::function<int(openconnect::NotificationAggregateCpp&&)> m_pushNotificationCallback;
 };
@@ -77,11 +98,13 @@ namespace openconnect {
 GRPCServer::GRPCServer(
         int port, 
         std::function<int(openconnect::FileEntry&&)>&& pushFileCallback,
-        std::function<int(openconnect::NotificationAggregateCpp&&)>&& notificationCallback)
+        std::function<int(openconnect::NotificationAggregateCpp&&)>&& notificationCallback,
+        std::function<OptionalClipboardEntryCpp()>&& readNotificationsFunc)
     : m_port(port)
-    , m_pushFileCallback(pushFileCallback) {
-    SPDLOG_INFO("Grpc server initialization...");
-
+    , m_pushFileCallback(pushFileCallback)
+    , m_readNotificationsFunc(readNotificationsFunc) 
+{
+        SPDLOG_INFO("Grpc server initialization...");
 }
 
 void GRPCServer::Run() {
@@ -93,7 +116,8 @@ void GRPCServer::Run() {
 
     Service service(
         std::move(m_pushFileCallback),
-        std::move(m_pushNotificationCallback)
+        std::move(m_pushNotificationCallback),
+        std::move(m_readNotificationsFunc)
     );
 
     builder.RegisterService(&service);

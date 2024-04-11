@@ -17,7 +17,8 @@ public:
     GRPCServer(
         int port,
         std::function<int(openconnect::FileEntry&&)>&& pushFileCallback,
-        std::function<int(openconnect::NotificationAggregateCpp&&)>&& pushNotificationCallback
+        std::function<int(openconnect::NotificationAggregateCpp&&)>&& pushNotificationCallback,
+        std::function<OptionalClipboardEntryCpp()>&& readNotificationsFunc
     );
     void Run();
     void Stop();
@@ -36,6 +37,7 @@ private:
 
     std::function<int(openconnect::FileEntry&&)> m_pushFileCallback;
     std::function<int(openconnect::NotificationAggregateCpp&&)> m_pushNotificationCallback;
+    std::function<OptionalClipboardEntryCpp()> m_readNotificationsFunc;
 };
 
 } // namespace openconnect

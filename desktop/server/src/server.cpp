@@ -1,4 +1,5 @@
 #include "server.h"
+#include "clipboard_entry.h"
 #include "file_entry.h"
 #include "types.pb.h"
 
@@ -56,6 +57,7 @@ namespace openconnect {
 
         m_UDPServer.emplace(
             [this](const std::string& s) {
+                SPDLOG_INFO("UDP callback: {}", s);
                 return UDPServerCallback(s);
             },
             m_config.udp_port
@@ -80,6 +82,9 @@ namespace openconnect {
                     return 1;
                 }
                 return 0;
+            },
+            [this]() -> OptionalClipboardEntryCpp {
+                return getClipboardEntry();
             }
         );
     }
