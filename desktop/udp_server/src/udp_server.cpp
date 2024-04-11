@@ -16,7 +16,7 @@ UDPServer::UDPServer(std::function<std::string(std::string)>&& callback, int por
     : m_callback(callback)
     , m_port(port)
 {
-    SPDLOG_INFO("UDP Server starting...");
+    SPDLOG_INFO("UDP Server initialize...");
 }
 
 void UDPServer::Run() {

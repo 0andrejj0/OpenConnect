@@ -1,9 +1,12 @@
+#pragma once
+
 #include <filesystem>
 #include <vector>
+#include <string>
 
 namespace openconnect {
     struct FileEntry {
         std::filesystem::path name;
-        std::vector<uint8_t> content;
+        std::string content;
     };
 }

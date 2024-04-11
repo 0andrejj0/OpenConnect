@@ -7,12 +7,12 @@ add_library(${SERVER_LIBRARY_NAME}
     STATIC
         "src/server.cpp"
 )
-message(WARNING "${FS_PROCESSOR_INCLUDE}")
 target_include_directories(${SERVER_LIBRARY_NAME}
     PUBLIC
         "${COMMON_INCLUDE_DIR}"
         "include"
         "${UDP_SERVER_INCLUDE}"
+        "${GRPC_SERVER_INCLUDE}"
         "${FS_PROCESSOR_INCLUDE}"
 )
 target_link_libraries(${SERVER_LIBRARY_NAME}
@@ -20,6 +20,7 @@ target_link_libraries(${SERVER_LIBRARY_NAME}
         spdlog::spdlog
         udp_server_lib
         fs_processor_lib
+        grpc_server_lib
 )
 
 # build executable

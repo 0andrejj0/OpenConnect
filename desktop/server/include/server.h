@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include "udp_server.h"
+#include "grpc_server.h"
 #include "fs_processor.h"
 
 #include <atomic>
@@ -25,9 +26,13 @@ private: // udp_server
     std::string UDPServerCallback(const std::string& req);
 
 private: // grpc server
+    std::optional<GRPCServer> m_GRPCServer;
 
 private: // config
     const ServerConfig m_config;
+
+private:
+    FSProcessor m_FSProcessor;
 
 private: // common
     std::atomic_flag m_stop{false};
