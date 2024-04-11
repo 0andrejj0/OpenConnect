@@ -17,7 +17,35 @@
 		FDED74BE2BC1C2FA00CFA3AF /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74BD2BC1C2FA00CFA3AF /* NotificationService.swift */; };
 		FDED74C02BC1C36C00CFA3AF /* TrackpadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74BF2BC1C36C00CFA3AF /* TrackpadService.swift */; };
 		FDED74C22BC1C3D800CFA3AF /* KeyboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED74C12BC1C3D800CFA3AF /* KeyboardService.swift */; };
+		FDED75232BC6F2EF00CFA3AF /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED75222BC6F2EF00CFA3AF /* ShareViewController.swift */; };
+		FDED75262BC6F2EF00CFA3AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDED75242BC6F2EF00CFA3AF /* MainInterface.storyboard */; };
+		FDED752A2BC6F2EF00CFA3AF /* ShareToComp.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FDED75282BC6F2EF00CFA3AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDED749A2BC1AF6C00CFA3AF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDED751F2BC6F2EF00CFA3AF;
+			remoteInfo = ShareToComp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FDED75172BC6E77D00CFA3AF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FDED752A2BC6F2EF00CFA3AF /* ShareToComp.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FDED74A22BC1AF6C00CFA3AF /* CompConnectIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompConnectIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,10 +60,22 @@
 		FDED74BD2BC1C2FA00CFA3AF /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		FDED74BF2BC1C36C00CFA3AF /* TrackpadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadService.swift; sourceTree = "<group>"; };
 		FDED74C12BC1C3D800CFA3AF /* KeyboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardService.swift; sourceTree = "<group>"; };
+		FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareToComp.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDED75222BC6F2EF00CFA3AF /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		FDED75252BC6F2EF00CFA3AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		FDED75272BC6F2EF00CFA3AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFeatures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FDED749F2BC1AF6C00CFA3AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDED751D2BC6F2EF00CFA3AF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -49,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				FDED74A42BC1AF6C00CFA3AF /* CompConnectIOS */,
+				FDED75212BC6F2EF00CFA3AF /* ShareToComp */,
 				FDED74A32BC1AF6C00CFA3AF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				FDED74A22BC1AF6C00CFA3AF /* CompConnectIOS.app */,
+				FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,6 +108,7 @@
 			children = (
 				FDED74A52BC1AF6C00CFA3AF /* AppDelegate.swift */,
 				FDED74A72BC1AF6C00CFA3AF /* SceneDelegate.swift */,
+				FDED752E2BC86FA900CFA3AF /* ListFeatures.swift */,
 				FDED74A92BC1AF6C00CFA3AF /* ViewController.swift */,
 				FDED74B92BC1B18400CFA3AF /* PasteboardService.swift */,
 				FDED74BB2BC1C29D00CFA3AF /* CameraService.swift */,
@@ -79,6 +122,16 @@
 			path = CompConnectIOS;
 			sourceTree = "<group>";
 		};
+		FDED75212BC6F2EF00CFA3AF /* ShareToComp */ = {
+			isa = PBXGroup;
+			children = (
+				FDED75222BC6F2EF00CFA3AF /* ShareViewController.swift */,
+				FDED75242BC6F2EF00CFA3AF /* MainInterface.storyboard */,
+				FDED75272BC6F2EF00CFA3AF /* Info.plist */,
+			);
+			path = ShareToComp;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,15 +142,34 @@
 				FDED749E2BC1AF6C00CFA3AF /* Sources */,
 				FDED749F2BC1AF6C00CFA3AF /* Frameworks */,
 				FDED74A02BC1AF6C00CFA3AF /* Resources */,
+				FDED75172BC6E77D00CFA3AF /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FDED75292BC6F2EF00CFA3AF /* PBXTargetDependency */,
 			);
 			name = CompConnectIOS;
 			productName = CompConnectIOS;
 			productReference = FDED74A22BC1AF6C00CFA3AF /* CompConnectIOS.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FDED751F2BC6F2EF00CFA3AF /* ShareToComp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDED752B2BC6F2EF00CFA3AF /* Build configuration list for PBXNativeTarget "ShareToComp" */;
+			buildPhases = (
+				FDED751C2BC6F2EF00CFA3AF /* Sources */,
+				FDED751D2BC6F2EF00CFA3AF /* Frameworks */,
+				FDED751E2BC6F2EF00CFA3AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareToComp;
+			productName = ShareToComp;
+			productReference = FDED75202BC6F2EF00CFA3AF /* ShareToComp.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -110,6 +182,9 @@
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					FDED74A12BC1AF6C00CFA3AF = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					FDED751F2BC6F2EF00CFA3AF = {
 						CreatedOnToolsVersion = 14.2;
 					};
 				};
@@ -128,6 +203,7 @@
 			projectRoot = "";
 			targets = (
 				FDED74A12BC1AF6C00CFA3AF /* CompConnectIOS */,
+				FDED751F2BC6F2EF00CFA3AF /* ShareToComp */,
 			);
 		};
 /* End PBXProject section */
@@ -142,6 +218,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDED751E2BC6F2EF00CFA3AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDED75262BC6F2EF00CFA3AF /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -152,6 +236,7 @@
 				FDED74BC2BC1C29D00CFA3AF /* CameraService.swift in Sources */,
 				FDED74C02BC1C36C00CFA3AF /* TrackpadService.swift in Sources */,
 				FDED74C22BC1C3D800CFA3AF /* KeyboardService.swift in Sources */,
+				FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */,
 				FDED74BA2BC1B18400CFA3AF /* PasteboardService.swift in Sources */,
 				FDED74AA2BC1AF6C00CFA3AF /* ViewController.swift in Sources */,
 				FDED74A62BC1AF6C00CFA3AF /* AppDelegate.swift in Sources */,
@@ -160,7 +245,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDED751C2BC6F2EF00CFA3AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDED75232BC6F2EF00CFA3AF /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FDED75292BC6F2EF00CFA3AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDED751F2BC6F2EF00CFA3AF /* ShareToComp */;
+			targetProxy = FDED75282BC6F2EF00CFA3AF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FDED74B02BC1AF7100CFA3AF /* LaunchScreen.storyboard */ = {
@@ -169,6 +270,14 @@
 				FDED74B12BC1AF7100CFA3AF /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FDED75242BC6F2EF00CFA3AF /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDED75252BC6F2EF00CFA3AF /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -291,6 +400,7 @@
 		FDED74B72BC1AF7100CFA3AF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -317,6 +427,7 @@
 		FDED74B82BC1AF7100CFA3AF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -340,6 +451,56 @@
 			};
 			name = Release;
 		};
+		FDED752C2BC6F2EF00CFA3AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareToComp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareToComp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Khabibulina.CompConnectIOS.ShareToComp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FDED752D2BC6F2EF00CFA3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareToComp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareToComp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Khabibulina.CompConnectIOS.ShareToComp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -357,6 +518,15 @@
 			buildConfigurations = (
 				FDED74B72BC1AF7100CFA3AF /* Debug */,
 				FDED74B82BC1AF7100CFA3AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDED752B2BC6F2EF00CFA3AF /* Build configuration list for PBXNativeTarget "ShareToComp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDED752C2BC6F2EF00CFA3AF /* Debug */,
+				FDED752D2BC6F2EF00CFA3AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
