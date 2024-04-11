@@ -1,10 +1,20 @@
 #include "clipboard_processor.h"
+#include "clipboard_entry.h"
 #include "file_entry.h"
 #include "spdlog/common.h"
 
+#include <cstdio>
+#include <cstdlib>
+#include <exception>
+#include <filesystem>
+#include <fmt/core.h>
 #include <string>
+#include <string_view>
+#include <sys/types.h>
+#include <thread>
 #include <unistd.h>
 #include <variant>
+#include <fstream>
 
 #include <spdlog/spdlog.h>
 
@@ -24,6 +34,69 @@ namespace {
 //     return result;
 // }
 
+openconnect::OptionalClipboardEntryCpp readClipboardLinux() noexcept {
+    static constexpr std::string_view command = "wl-paste";
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.data(), "r"), pclose);
+    if (!pipe) {
+        SPDLOG_ERROR("Failed to create pipe to read clipboard");
+        return {};
+    }
+
+    static std::array<char, 20'000'000> buffer;
+    auto rc = fread(buffer.data(), 1, buffer.size(), pipe.get());
+    if (rc <= 0) {
+        SPDLOG_ERROR("Failed to read clipboard from pipe, res: {}", rc);
+    }
+    openconnect::OptionalClipboardEntryCpp res;
+    res.emplace(std::string(buffer.begin(), buffer.begin() + rc));
+    return res;
+}
+
+void workerFuncLinux(const std::function<void(openconnect::OptionalClipboardEntryCpp)>& calback) {
+    static constexpr std::string_view scriptPath = "/tmp/openconnect_notify_new_clipboard.sh";
+    try {
+        {
+            std::ofstream out(scriptPath.data());
+            out << "echo -n \"f\"\n";
+        }
+        {
+            std::filesystem::permissions(scriptPath.data(), std::filesystem::perms::all);
+        }
+    } catch(const std::exception& e) {
+        SPDLOG_ERROR("filed to write notification script: {}", e.what());
+        return;
+    }
+     
+    static constexpr std::string_view command = "wl-paste -w /tmp/openconnect_notify_new_clipboard.sh"; 
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.data(), "r"), pclose);
+
+    if (!pipe) {
+        SPDLOG_ERROR("Failed to create pipe");
+    }
+
+    while (true) try {
+        static std::array<char, 100> buffer;
+        auto rc = fread(buffer.data(), 1, 1, pipe.get());
+        if (rc > 0) {
+            auto res = readClipboardLinux();
+            SPDLOG_INFO("Clipboard changed notification");
+            try {
+                calback(res);
+            } catch (const std::exception& e) {
+                SPDLOG_ERROR("Exception from clipboard change callback: {}", e.what());
+            }
+        } else {
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(50ms);
+            continue;
+        }
+
+    } catch (const std::exception& e) {
+        SPDLOG_INFO("Clipboard changed notification, but fail: {}", e.what());
+    }
+}
+
+#if defined(__linux)
 void setClipboardLinux(std::string&& content) noexcept {
     static constexpr std::string_view command = "wl-copy";
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.data(), "w"), pclose);
@@ -38,13 +111,16 @@ void setClipboardLinux(std::string&& content) noexcept {
         SPDLOG_INFO("Writing to clipboard ERROR: content: {}, writed: {}", content.length(), rc);
     }
 }
+#endif
 
 } // namespace
 
 namespace openconnect {
 
-ClipboardProcessor::ClipboardProcessor(std::function<void(openconnect::OptionalClipboardEntryCpp)>&& clipboardChangeCallback)
+ClipboardProcessor::ClipboardProcessor(std::function<void(openconnect::OptionalClipboardEntryCpp&&)>&& clipboardChangeCallback)
     : m_clipboardChangeCallback(clipboardChangeCallback) {
+
+    m_thread.emplace(workerFuncLinux, clipboardChangeCallback);
 }
 
 int ClipboardProcessor::setClipboard(ClipboardEntryCpp&& entry) noexcept {
@@ -58,6 +134,8 @@ int ClipboardProcessor::setClipboard(ClipboardEntryCpp&& entry) noexcept {
     return 0;
     #endif
 }
+
+
 
 // OptionalClipboardEntryCpp ClipboardProcessor::getClipboard() noexcept {
 //     using namespace std::chrono_literals;

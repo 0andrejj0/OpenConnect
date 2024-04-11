@@ -1,5 +1,6 @@
 #include "config.h"
 
+#include "types.pb.h"
 #include "udp_server.h"
 #include "grpc_server.h"
 
@@ -42,6 +43,10 @@ private: // processors
 private: // common
     std::atomic_flag m_stop{false};
     std::list<std::thread> m_threads;
+
+    std::mutex m_clipBoardMutex;
+    OptionalClipboardEntryCpp m_clipboardEntry;
+    OptionalClipboardEntryCpp getClipboardEntry() noexcept;
 
 };
 

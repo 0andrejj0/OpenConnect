@@ -5,7 +5,9 @@
 #include <cstdlib>
 #include <exception>
 #include <filesystem>
+#include <mutex>
 #include <spdlog/spdlog.h>
+#include <utility>
 
 namespace {
 
@@ -37,7 +39,15 @@ namespace openconnect {
             FixPath(m_config.imagesSavePath),
             FixPath(m_config.videosSavePath),
             FixPath(m_config.filesSavePath))
-        , m_ClipboardProcessor({})
+        , m_ClipboardProcessor([this](OptionalClipboardEntryCpp&& entry){
+            SPDLOG_INFO("Clipboard callback: {}", entry.has_value());
+            if (entry.has_value())
+                SPDLOG_INFO("Clipboard callback {}", std::get<std::string>(entry->content));
+
+            std::lock_guard<std::mutex> lock(m_clipBoardMutex);
+
+            m_clipboardEntry = std::move(entry);
+        })
     {
         SPDLOG_INFO("Server initialization...");
 
@@ -72,6 +82,12 @@ namespace openconnect {
                 return 0;
             }
         );
+    }
+
+    OptionalClipboardEntryCpp Server::getClipboardEntry() noexcept {
+        std::lock_guard<std::mutex> lock(m_clipBoardMutex);
+        auto res = std::move(m_clipboardEntry);
+        return res;
     }
 
     void Server::Run() {
