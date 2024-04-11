@@ -14,6 +14,8 @@ target_include_directories(${SERVER_LIBRARY_NAME}
         "${UDP_SERVER_INCLUDE}"
         "${GRPC_SERVER_INCLUDE}"
         "${FS_PROCESSOR_INCLUDE}"
+        "${NOTIFICATION_PROCESSOR_INCLUDE}"
+        "${CLIPBOARD_PROCESSOR_INCLUDE}"
 )
 target_link_libraries(${SERVER_LIBRARY_NAME}
     PRIVATE
@@ -21,6 +23,8 @@ target_link_libraries(${SERVER_LIBRARY_NAME}
         udp_server_lib
         fs_processor_lib
         grpc_server_lib
+        notification_processor_lib
+        clipboard_processor_lib
 )
 
 # build executable

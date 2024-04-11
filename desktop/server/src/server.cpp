@@ -5,7 +5,9 @@
 #include <cstdlib>
 #include <exception>
 #include <filesystem>
+#include <mutex>
 #include <spdlog/spdlog.h>
+#include <utility>
 
 namespace {
 
@@ -37,8 +39,20 @@ namespace openconnect {
             FixPath(m_config.imagesSavePath),
             FixPath(m_config.videosSavePath),
             FixPath(m_config.filesSavePath))
+        , m_ClipboardProcessor([this](OptionalClipboardEntryCpp&& entry){
+            SPDLOG_INFO("Clipboard callback: {}", entry.has_value());
+            if (entry.has_value())
+                SPDLOG_INFO("Clipboard callback {}", std::get<std::string>(entry->content));
+
+            std::lock_guard<std::mutex> lock(m_clipBoardMutex);
+
+            m_clipboardEntry = std::move(entry);
+        })
     {
         SPDLOG_INFO("Server initialization...");
+
+        m_NotificationProcessor.PushNotification({NotificationEntryCpp{.senderName="from mee", .text="MESSSAGE"}});
+        m_ClipboardProcessor.setClipboard({"KEK_CLIPBOARD"});
 
         m_UDPServer.emplace(
             [this](const std::string& s) {
@@ -53,11 +67,27 @@ namespace openconnect {
                 try {
                     m_FSProcessor.PushFile(std::move(entry));
                 } catch (const std::exception& e) {
+                    SPDLOG_ERROR("Failed to save file");
+                    return 1;
+                }
+                return 0;
+            },
+            [this](openconnect::NotificationAggregateCpp&& entry) -> int {
+                try {
+                    m_NotificationProcessor.PushNotification(std::move(entry));
+                } catch (const std::exception& e) {
+                    SPDLOG_ERROR("Failed to display notifications");
                     return 1;
                 }
                 return 0;
             }
         );
+    }
+
+    OptionalClipboardEntryCpp Server::getClipboardEntry() noexcept {
+        std::lock_guard<std::mutex> lock(m_clipBoardMutex);
+        auto res = std::move(m_clipboardEntry);
+        return res;
     }
 
     void Server::Run() {
