@@ -14,8 +14,11 @@ struct KeyboardService: View {
 										keyboardFocused = true
 								}
 						}
-						.onChange(of: text) { _ in
-								text = " "
+						.onChange(of: text) { val in
+								if text != " " {
+										client.send(string: val)
+										text = " "
+								}
 						}
 		}
 }
