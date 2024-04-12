@@ -20,22 +20,8 @@
 
 namespace {
 
-
-// std::string execSimple(const char* cmd) {
-//     std::array<char, 128> buffer;
-//     std::string result;
-//     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "rw"), pclose);
-//     if (!pipe) {
-//         throw std::runtime_error("popen() failed!");
-//     }
-//     while (fgets(buffer.data(), static_cast<int>(buffer.size()), pipe.get()) != nullptr) {
-//         result += buffer.data();
-//     }
-//     return result;
-// }
-
 openconnect::OptionalClipboardEntryCpp readClipboardLinux() noexcept {
-    static constexpr std::string_view command = "wl-paste";
+    static constexpr std::string_view command = "wl-paste -n";
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.data(), "r"), pclose);
     if (!pipe) {
         SPDLOG_ERROR("Failed to create pipe to read clipboard");
@@ -141,14 +127,5 @@ int ClipboardProcessor::setClipboard(ClipboardEntryCpp&& entry) noexcept {
     return 0;
     #endif
 }
-
-
-
-// OptionalClipboardEntryCpp ClipboardProcessor::getClipboard() noexcept {
-//     using namespace std::chrono_literals;
-//     auto timeout = 500ms;
-
-//     return {};
-// }
 
 } // namespace openconnect

@@ -19,7 +19,6 @@ target_include_directories(${SERVER_LIBRARY_NAME}
         "${CMAKE_CURRENT_BINARY_DIR}"
         "${GRPC_SERVER_INCLUDE_ADD}"
 )
-message(WARNING "${CMAKE_CURRENT_BINARY_DIR}")
 target_link_libraries(${SERVER_LIBRARY_NAME}
     PRIVATE
         spdlog::spdlog
