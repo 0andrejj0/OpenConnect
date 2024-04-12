@@ -1,7 +1,9 @@
 import UIKit
 
+var client: GrpcIntegration = GrpcIntegration()
+
 final class PasteboardService {
-		
+				
 		init() {
 				NotificationCenter.default.addObserver(
 						self,
@@ -9,12 +11,12 @@ final class PasteboardService {
 						name: UIPasteboard.changedNotification,
 						object: nil
 				)
+				
 		}
 		
 		@objc
 		private func clipboardChanged() {
 				let pasteboardString: String? = UIPasteboard.general.string
-				// UIPasteboard.general
-				// send data to pasteboard of compik
+				client.send(string: pasteboardString ?? "")
 		}
 }

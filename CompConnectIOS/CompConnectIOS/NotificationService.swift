@@ -2,6 +2,7 @@ import SwiftUI
 import UserNotifications
 
 struct DebugPanel: View {
+				
 		var body: some View {
 				VStack(alignment: .leading) {
 						Button {
@@ -31,6 +32,8 @@ struct DebugPanel: View {
 								let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
 								UNUserNotificationCenter.current().add(request)
+								
+								client.send(string: pushTitles[tInd])
 						} label: {
 								HStack {
 										Text("Push notification")
