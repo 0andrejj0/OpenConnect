@@ -9,6 +9,7 @@
 #include <functional>
 #include <thread>
 #include <type_traits>
+#include <atomic>
 
 namespace openconnect {
 
@@ -24,6 +25,8 @@ private:
 
     std::function<void(openconnect::OptionalClipboardEntryCpp)> m_clipboardChangeCallback;
     std::optional<std::thread> m_thread;
+
+    std::atomic<int64_t> m_need_skip{1};
 };
 
 

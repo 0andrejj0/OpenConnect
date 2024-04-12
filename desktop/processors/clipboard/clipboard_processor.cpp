@@ -20,22 +20,8 @@
 
 namespace {
 
-
-// std::string execSimple(const char* cmd) {
-//     std::array<char, 128> buffer;
-//     std::string result;
-//     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "rw"), pclose);
-//     if (!pipe) {
-//         throw std::runtime_error("popen() failed!");
-//     }
-//     while (fgets(buffer.data(), static_cast<int>(buffer.size()), pipe.get()) != nullptr) {
-//         result += buffer.data();
-//     }
-//     return result;
-// }
-
 openconnect::OptionalClipboardEntryCpp readClipboardLinux() noexcept {
-    static constexpr std::string_view command = "wl-paste";
+    static constexpr std::string_view command = "wl-paste -n";
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.data(), "r"), pclose);
     if (!pipe) {
         SPDLOG_ERROR("Failed to create pipe to read clipboard");
@@ -52,7 +38,7 @@ openconnect::OptionalClipboardEntryCpp readClipboardLinux() noexcept {
     return res;
 }
 
-void workerFuncLinux(const std::function<void(openconnect::OptionalClipboardEntryCpp)>& calback) {
+void workerFuncLinux(const std::function<void(openconnect::OptionalClipboardEntryCpp)>& calback, std::atomic<int64_t>& needSkip) {
     static constexpr std::string_view scriptPath = "/tmp/openconnect_notify_new_clipboard.sh";
     try {
         {
@@ -78,6 +64,12 @@ void workerFuncLinux(const std::function<void(openconnect::OptionalClipboardEntr
         static std::array<char, 100> buffer;
         auto rc = fread(buffer.data(), 1, 1, pipe.get());
         if (rc > 0) {
+            if (needSkip.fetch_sub(1) > 0) {
+                SPDLOG_INFO("Read buffer skipped, this is self-own change");
+                continue;
+            } else {
+                needSkip.fetch_add(1);
+            }
             auto res = readClipboardLinux();
             SPDLOG_INFO("Clipboard changed notification");
             try {
@@ -120,10 +112,11 @@ namespace openconnect {
 ClipboardProcessor::ClipboardProcessor(std::function<void(openconnect::OptionalClipboardEntryCpp&&)>&& clipboardChangeCallback)
     : m_clipboardChangeCallback(clipboardChangeCallback) {
 
-    m_thread.emplace(workerFuncLinux, clipboardChangeCallback);
+    m_thread.emplace(workerFuncLinux, clipboardChangeCallback, std::reference_wrapper<std::atomic<int64_t>>(m_need_skip));
 }
 
 int ClipboardProcessor::setClipboard(ClipboardEntryCpp&& entry) noexcept {
+    m_need_skip.fetch_add(1);
     #if defined(__linux)
         if (std::holds_alternative<std::string>(entry.content)) {
             setClipboardLinux(std::move(std::get<std::string>(entry.content)));
@@ -134,14 +127,5 @@ int ClipboardProcessor::setClipboard(ClipboardEntryCpp&& entry) noexcept {
     return 0;
     #endif
 }
-
-
-
-// OptionalClipboardEntryCpp ClipboardProcessor::getClipboard() noexcept {
-//     using namespace std::chrono_literals;
-//     auto timeout = 500ms;
-
-//     return {};
-// }
 
 } // namespace openconnect

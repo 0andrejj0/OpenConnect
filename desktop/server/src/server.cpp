@@ -1,4 +1,5 @@
 #include "server.h"
+#include "clipboard_entry.h"
 #include "file_entry.h"
 #include "types.pb.h"
 
@@ -51,11 +52,9 @@ namespace openconnect {
     {
         SPDLOG_INFO("Server initialization...");
 
-        m_NotificationProcessor.PushNotification({NotificationEntryCpp{.senderName="from mee", .text="MESSSAGE"}});
-        m_ClipboardProcessor.setClipboard({"KEK_CLIPBOARD"});
-
         m_UDPServer.emplace(
             [this](const std::string& s) {
+                SPDLOG_INFO("UDP callback: {}", s);
                 return UDPServerCallback(s);
             },
             m_config.udp_port
@@ -80,6 +79,16 @@ namespace openconnect {
                     return 1;
                 }
                 return 0;
+            },
+            [this](ClipboardEntryCpp&& entry) {
+                try {
+                    m_ClipboardProcessor.setClipboard(std::move(entry));
+                } catch (const std::exception& e) {
+                    SPDLOG_ERROR("Failed to set clipboard");
+                }
+            },
+            [this]() -> OptionalClipboardEntryCpp {
+                return getClipboardEntry();
             }
         );
     }
