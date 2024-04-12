@@ -27,6 +27,7 @@
 		FDED753C2BC8B9EF00CFA3AF /* _GRPCCore in Frameworks */ = {isa = PBXBuildFile; productRef = FDED753B2BC8B9EF00CFA3AF /* _GRPCCore */; };
 		FDED753E2BC8B9EF00CFA3AF /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = FDED753D2BC8B9EF00CFA3AF /* protoc-gen-grpc-swift */; };
 		FDED75672BC8BCF100CFA3AF /* GRPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED75662BC8BCF100CFA3AF /* GRPCClient.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +260,7 @@
 				FDED74BC2BC1C29D00CFA3AF /* CameraService.swift in Sources */,
 				FDED74C02BC1C36C00CFA3AF /* ListDevices.swift in Sources */,
 				FDED74C22BC1C3D800CFA3AF /* KeyboardService.swift in Sources */,
+				FDED752F2BC86FA900CFA3AF /* ListFeatures.swift in Sources */,
 				FDED74BA2BC1B18400CFA3AF /* PasteboardService.swift in Sources */,
 				FDED75672BC8BCF100CFA3AF /* GRPCClient.swift in Sources */,
 				FDED74AA2BC1AF6C00CFA3AF /* ViewController.swift in Sources */,

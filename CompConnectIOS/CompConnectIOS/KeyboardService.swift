@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct KeyboardService: View {
-		
+
 		@State var text: String = " "
 		@FocusState var keyboardFocused: Bool
 		
@@ -22,4 +22,3 @@ struct KeyboardService: View {
 						}
 		}
 }
-

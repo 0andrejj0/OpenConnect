@@ -1,6 +1,6 @@
 
 
-set(LIBRARY_NAME udp_server)
+set(LIBRARY_NAME udp_server_lib)
 
 add_library(${LIBRARY_NAME}
     src/udp_server.cpp
