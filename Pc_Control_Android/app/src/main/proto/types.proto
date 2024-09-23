@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package openconnect;
+
+message Void {}
+
+message Retcode {
+    int32 retcode = 1;
+}
+
+message File {
+    oneof nameOrExt {
+        string name = 1;
+        string extension = 2;
+    };
+    bytes file = 3;
+}
+
+// notification
+message NotificationEntry {
+    string from = 1;
+    string data = 2;
+}
+
+message NotificationAggregate {
+    repeated NotificationEntry notifications = 1;
+}
+
+// keyboard
+message KeyboardEntry {
+    int32 key = 1;
+}
+
+message KeyboardAggregate {
+    repeated KeyboardEntry events = 1;
+}
+
+// touchpad
+message TouchpadEventEntry {
+    int64 nsec = 1;
+    // TODO
+}
+
+message TouchpadAggregate {
+    repeated TouchpadEventEntry events = 1;
+}
+
+// clipboard
+message ClipboardEntry {
+    oneof content {
+        string clipboardText = 1;
+        File file = 2;
+    }
+}
+
+message OptionalClipboardEntry {
+    optional ClipboardEntry clipboardEntry = 1;
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package openconnect;
+
+import "types.proto";
+
+service Server {
+    rpc PostNotifications (NotificationAggregate) returns (Retcode)                {}
+    // TODO ReadNotifications
+
+    rpc PostKey           (KeyboardAggregate)     returns (Retcode)                {}
+    // TODO PostTouchpad
+
+    rpc PostClipboard     (ClipboardEntry)        returns (Retcode)                {}
+    rpc ReadClipboard     (Void)                  returns (OptionalClipboardEntry) {}
+
+    rpc PostFile          (File)                  returns (Retcode)                {}
+}
